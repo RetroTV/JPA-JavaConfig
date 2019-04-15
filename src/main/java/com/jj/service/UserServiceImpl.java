@@ -61,7 +61,8 @@ public class UserServiceImpl implements UserService {
 		
 		if("example3".equals(example)) {			
 			for(User user : users) {
-				log.error(user.getId() + "유저를 추가합니다");			// 실제로는 에러가 아니니 신경쓰지 말것, info로 설정하면 로그 정보가 뜨지 않는다
+				// 실제로는 에러가 아니니 신경쓰지 말것, info로 설정하면 hibernate 자체 로그 기능 때문에 로그 정보가 뜨지 않는다
+				log.error(user.getId() + "유저를 추가합니다 (실제로는 에러가 아님 *주석 참고)");
 				userDao.add(user);
 				savedAfterGetUsers.add(userDao.findById(user.getNo()));
 			}
