@@ -3,6 +3,7 @@
 > JDK Ver &nbsp;&nbsp;&nbsp;&nbsp; : 1.8  
 > Spring Ver : 5.1.6.RELEASE  
 > DATABASE : MariaDB 10.3  
+> DB 쿼리 툴 : QueryBox, HeidiSQL  
 
 ## 참고 자료
 > Hibernate JPA DAO Example  
