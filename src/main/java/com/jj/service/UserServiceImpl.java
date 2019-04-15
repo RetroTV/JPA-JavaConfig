@@ -48,9 +48,11 @@ public class UserServiceImpl implements UserService {
 		if("example2".equals(example)) {			
 			for(User user : users) {
 				if("dummy4".equals(user.getId())) {
+					log.error("Dummy4일때 고의로 Exception을 발생시킵니다");
 					user = null;
 					userDao.add(user);
-				} else {					
+				} else {
+					log.error(user.getId() + "유저를 추가합니다");
 					userDao.add(user);
 					savedAfterGetUsers.add(userDao.findById(user.getNo()));
 				}
@@ -59,6 +61,7 @@ public class UserServiceImpl implements UserService {
 		
 		if("example3".equals(example)) {			
 			for(User user : users) {
+				log.error(user.getId() + "유저를 추가합니다");			// 실제로는 에러가 아니니 신경쓰지 말것, info로 설정하면 로그 정보가 뜨지 않는다
 				userDao.add(user);
 				savedAfterGetUsers.add(userDao.findById(user.getNo()));
 			}
