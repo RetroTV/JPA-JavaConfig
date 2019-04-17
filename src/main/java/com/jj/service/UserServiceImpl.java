@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findUserByNo(Integer id) {
-		User user = userDao.findById(id);
+		User user = userDao.selectById(id);
 		
 		return user;
 	}
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 				
 		User user = new User("dummy", "password", "dummy@gmail.com", "Dummy");
 		
-		userDao.add(user);
+		userDao.insert(user);
 	}
 
 	@Override
@@ -48,24 +48,31 @@ public class UserServiceImpl implements UserService {
 				if("dummy4".equals(user.getId())) {
 					log.error("Dummy4일때 고의로 Exception을 발생시킵니다");
 					user = null;
-					userDao.add(user);
+					userDao.insert(user);
 				} else {
 					log.error(user.getId() + "유저를 추가합니다");
-					userDao.add(user);
-					createdUsers.add(userDao.findById(user.getNo()));
+					userDao.insert(user);
+					createdUsers.add(userDao.selectById(user.getNo()));
 				}
 			}
 		}
 		
 		if("example3".equals(example)) {			
 			for(User user : users) {
-				// 실제로는 에러가 아니니 신경쓰지 말것, info로 설정하면 hibernate 자체 로그 기능 때문에 로그 정보가 뜨지 않는다
+				// 실제로는 에러가 아니니 신경쓰지 말것, info로 설정하면 hibernate 자체 로그 기능 때문에 로그 정보가 뜨지 않음
 				log.error(user.getId() + "유저를 추가합니다 (실제로는 에러가 아님 *주석 참고)");
-				userDao.add(user);
-				createdUsers.add(userDao.findById(user.getNo()));	
+				userDao.insert(user);
+				createdUsers.add(userDao.selectById(user.getNo()));	
 			}
 		}
 		
 		return createdUsers;
+	}
+	
+	@Override
+	@Transactional
+	public List<User> selectByUserName(String columnName, String word) {
+		List<User> users = userDao.selectByColumn(columnName, word);
+		return users;
 	}
 }

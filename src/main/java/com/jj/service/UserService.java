@@ -9,4 +9,5 @@ public interface UserService {
 	public User findUserByNo(Integer id);
 	public void createDummyUser();
 	public List<User> insertUserList(List<User> users, String example);
+	public List<User> selectByUserName(String columnName, String word);
 }

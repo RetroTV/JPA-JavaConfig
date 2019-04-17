@@ -68,5 +68,14 @@ public class HibernateJavaConfigConfigExampleController {
 		
 		return "example3";
 	}
+	
+	@RequestMapping(value = "/example4", method = RequestMethod.GET)
+	public String example4(Model model) {
+		
+		List<User> users = userService.selectByUserName("name", "%Dummy%");
+		model.addAttribute("users", users);
+		
+		return "example4";
+	}
 }
 

@@ -25,7 +25,7 @@ public class ContextHibernate {
         
 		Properties properties = new Properties();
 		
-        properties.setProperty("hibernate.hbm2ddl.auto", "create");
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MariaDBDialect");
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.connection.useSSL", "false");
