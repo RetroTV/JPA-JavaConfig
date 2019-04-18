@@ -8,6 +8,7 @@ import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,65 +24,65 @@ import com.jj.vo.User;
 @Transactional
 public class UserDao implements GenericDao<User, Integer> {
 	
-	
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	Session session = null;
 	
 	Logger log = Logger.getLogger(this.getClass());
 	
 	@Override
 	public void insert(User user) {
-		sessionFactory.getCurrentSession()
-					  .save(user);
+		getSession().save(user);
 	}
 
 	@Override
 	public void update(User user) {
-		sessionFactory.getCurrentSession()
-			 		  .update(user);
+		getSession().update(user);
 	}
 
 	@Override
 	public void delete(User user) {
-		sessionFactory.getCurrentSession()
-					  .delete(user);
+		getSession().delete(user);
 	}
 
 	@Override
 	public void deleteAll() {
-		sessionFactory.getCurrentSession()
-					  .createQuery("DELETE FROM users");
+		getSession().createQuery("DELETE FROM users");
 	}
 	
 	@Override
 	public User selectById(Integer id) {
-		User user = sessionFactory.getCurrentSession()
-								  .get(User.class, id);
+		User user = getSession().get(User.class, id);
 		return user;
 	}
 	
 	@Override
 	public List<User> selectAll() {
-		List<User> users = sessionFactory.getCurrentSession()
-										 .createQuery("SELECT * FROM users", User.class)
-										 .getResultList();
+		List<User> users = getSession().createQuery("SELECT * FROM users", User.class)
+									   .getResultList();
 		return users;
 	}
 	
 	@Override
 	public List<User> selectByColumn(String columnName, String word) {
-		//현재 createCriteria() 메소드는 작동은 하지만 하이버네이트가 공식적으로 지원 중단한 상태.
+		//현재 createCriteria() 메소드는 작동은 하지만 하이버네이트가 공식적으로 지원 중단한 상태임.
 		//List<User> users = sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.like("name", "Dummy", MatchMode.ANYWHERE)).list(); // 앞이든 뒤든 name 프로퍼티에서 Dummy라는 단어가 있으면 찾아옴
 		
-		CriteriaBuilder cb = sessionFactory.getCurrentSession().getCriteriaBuilder();
+		CriteriaBuilder cb = getSession().getCriteriaBuilder();
 		CriteriaQuery<User> criteria = cb.createQuery(User.class);
 		Root<User> root = criteria.from(User.class);
 		
 		criteria.select(root)
 				.where(cb.like(root.get(columnName), word));
 		
-		List<User> users = sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
+		List<User> users = getSession().createQuery(criteria).getResultList();
 		
 		return users;
+	}
+	
+	public Session getSession() {
+		session = sessionFactory.getCurrentSession();
+		return session;
 	}
 }
