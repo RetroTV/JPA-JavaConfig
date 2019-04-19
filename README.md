@@ -5,6 +5,9 @@
 > DATABASE &nbsp;: MariaDB 10.3  
 > DB 쿼리 툴 : QueryBox, HeidiSQL  
 
+## 시작하기 전에
+> hibernate.sql을 이용해 데이터베이스를 생성해 주세요
+
 ## 참고 자료
 > Hibernate JPA DAO Example  
 > https://examples.javacodegeeks.com/enterprise-java/hibernate/hibernate-jpa-dao-example/  
