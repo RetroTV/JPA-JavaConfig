@@ -3,6 +3,8 @@ package com.jj.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.Session;
+
 import com.jj.vo.User;
 
 public interface GenericDao<T, Id extends Serializable> {
@@ -14,4 +16,6 @@ public interface GenericDao<T, Id extends Serializable> {
 	public User selectById(Id id);
 	public List<T> selectAll();
 	public List<User> selectByColumn(String columnName, String word);
+	
+	public Session getSession();
 }
