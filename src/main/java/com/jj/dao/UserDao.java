@@ -7,7 +7,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,34 +28,38 @@ public class UserDao implements GenericDao<User, Integer> {
 	
 	Session session = null;
 	
-	Logger log = Logger.getLogger(this.getClass());
-	
+	//user를 insert하는 예제
 	@Override
 	public void insert(User user) {
 		getSession().save(user);
 	}
 
+	//user를 update하는 예제
 	@Override
 	public void update(User user) {
 		getSession().update(user);
 	}
 
+	//user를 delete하는 예제
 	@Override
 	public void delete(User user) {
 		getSession().delete(user);
 	}
 
+	//쿼리문을 작성해, 모든 user정보를 삭제하는 예제
 	@Override
 	public void deleteAll() {
 		getSession().createQuery("DELETE FROM users");
 	}
 	
+	//user의 id 값으로 select하는 예제
 	@Override
 	public User selectById(Integer id) {
 		User user = getSession().get(User.class, id);
 		return user;
 	}
 	
+	//모든 user들을 select하는 예제
 	@Override
 	public List<User> selectAll() {
 		List<User> users = getSession().createQuery("SELECT * FROM users", User.class)
@@ -64,6 +67,7 @@ public class UserDao implements GenericDao<User, Integer> {
 		return users;
 	}
 	
+	//Criteria 메소드를 이용해, 특정 컬럼을 조회하는 예제
 	@Override
 	public List<User> selectByColumn(String columnName, String word) {
 		/*
