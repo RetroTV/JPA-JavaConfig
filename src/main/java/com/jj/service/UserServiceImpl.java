@@ -39,6 +39,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
+	public void updateUser(User user) {
+		
+		userDao.update(user);
+	}
+	
+	@Override
+	@Transactional
 	public List<User> insertUserList(List<User> users, String example) {
 		
 		List<User> createdUsers = new ArrayList<>();

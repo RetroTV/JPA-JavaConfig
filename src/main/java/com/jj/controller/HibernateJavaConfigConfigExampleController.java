@@ -31,6 +31,7 @@ public class HibernateJavaConfigConfigExampleController {
 		}
 		
 		log.info(user);
+		model.addAttribute("user", user);
 		
 		return "example1";
 	}
@@ -76,6 +77,21 @@ public class HibernateJavaConfigConfigExampleController {
 		model.addAttribute("users", users);
 		
 		return "example4";
+	}
+	
+	@RequestMapping(value = "/example5", method = RequestMethod.GET)
+	public String example5(Model model) {
+		
+		List<User> users = userService.selectByUserName("name", "Dummy");
+		User user = users.get(0);	// List로 가져온 유저가 하나뿐 이므로 0번째 List를 선택함.
+		
+		user.setPassword("I'm Dummy User");
+		userService.updateUser(user);
+		
+		user = userService.selectByUserName("name", "Dummy").get(0);
+		model.addAttribute("user", user);
+		
+		return "example5";
 	}
 }
 
